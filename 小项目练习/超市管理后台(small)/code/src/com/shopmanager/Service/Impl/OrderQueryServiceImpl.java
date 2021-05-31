@@ -4,6 +4,7 @@ package com.shopmanager.Service.Impl;
 import com.shopmanager.DAO.Impl.OrderQueryDaoImpl;
 import com.shopmanager.DAO.OrderQueryDao;
 import com.shopmanager.Service.OrderQueryService;
+import com.shopmanager.bean.Goods;
 import com.shopmanager.bean.Order;
 import com.shopmanager.bean.OrderInfo;
 import com.shopmanager.utils.DBUtils;
@@ -82,5 +83,26 @@ public class OrderQueryServiceImpl implements OrderQueryService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Goods queryGoods(Integer gid) {
+        Goods g= null;
+        try {
+            g = queryDao.selectGoods(gid);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return g;
     }
 }

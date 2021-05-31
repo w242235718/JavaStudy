@@ -1,30 +1,31 @@
 package com.shopmanager.bean;
 
 public class Rank {
-    private String gname;
+    private String gid;
     private Integer sales;
 
     public Rank() {
     }
 
-    public Rank(String gname, Integer sales) {
-        this.gname = gname;
+    public Rank(String gid, Integer sales) {
+        this.gid = gid;
         this.sales = sales;
     }
 
     @Override
     public String toString() {
-        return "商品名='" + gname + '\'' +
-                ", 销售额=" + sales +
+        return "Rank{" +
+                "gid='" + gid + '\'' +
+                ", sales=" + sales +
                 '}';
     }
 
-    public String getGname() {
-        return gname;
+    public String getGid() {
+        return gid;
     }
 
-    public void setGname(String gname) {
-        this.gname = gname;
+    public void setGid(String gid) {
+        this.gid = gid;
     }
 
     public Integer getSales() {

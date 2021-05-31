@@ -150,6 +150,10 @@ public class GoodsTypeController {
     private void addProductType() {
         System.out.println("请输入商品类型的父ID");
         int pid = sc.nextInt();
+        if (pid<=0){
+            System.out.println("父id不能为负数或零");
+            return;
+        }
         System.out.println("请输入商品类型名称");
         String typeName = sc.next();
         System.out.println("是否设置该商品类型为父类型 y/n");

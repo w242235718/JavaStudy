@@ -4,6 +4,7 @@ package com.shopmanager.Controller;
 import com.shopmanager.Service.Impl.OrderPurchaseServiceImpl;
 import com.shopmanager.Service.OrderPurchaseService;
 
+import com.shopmanager.bean.Goods;
 import com.shopmanager.bean.OrderInfo;
 import com.shopmanager.common.GoodsNotFoundException;
 
@@ -63,14 +64,24 @@ public class OrderPurchaseController {
     }
 
     private void showShoppingCart() {
+
         shoppingCart.forEach((key,item)->{
-            System.out.println(item);
+            StringBuilder pb = new StringBuilder();
+            Goods g=orderPurchaseService.querySingleItem(item);
+            System.out.println("购物车：");
+            pb.append("商品名称:"+g.getGname());
+            pb.append("\t商品价格:"+g.getPrice());
+            pb.append("\t商品编号:"+g.getGid());
+            pb.append("\t购买数量:"+item.getOrdernum());
+            pb.append("\t总额:"+(item.getOrdernum()*g.getPrice().doubleValue()));
+            System.out.println(pb);
         });
     }
 
     private void editProductStore() {
         try {
             shoppingCart=orderPurchaseService.editProductStoreInShoppingCart(shoppingCart,sc);
+            System.out.println("修改成功！");
         } catch (GoodsNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -79,6 +90,7 @@ public class OrderPurchaseController {
     private void deleteProductFromShoppingCart() {
         try {
             shoppingCart=orderPurchaseService.deleteProductInShoppringCart(shoppingCart,sc);
+            System.out.println("删除成功！");
         } catch (GoodsNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -93,7 +105,7 @@ public class OrderPurchaseController {
             return;
         }
         int result=orderPurchaseService.checkOut(shoppingCart,sc);
-        if (result<0){
+        if (result<=0){
             System.out.println("结算失败");
             return;
         }

@@ -4,6 +4,7 @@ import com.shopmanager.Service.Impl.ShopMemberServiceImpl;
 import com.shopmanager.Service.ShopMemberService;
 import com.shopmanager.bean.ShopMember;
 import com.shopmanager.utils.EncodingUtils;
+import com.shopmanager.utils.numericalUtils;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -120,12 +121,21 @@ public class ShopMemberController {
         }
         System.out.println("请输入联系方式");
         String phone = String.valueOf(sc.nextLong());
+        if (!phone.matches("[0-9]{11}")){
+            System.out.println("请填入11位0-9的数字");
+            return;
+        }
 
         System.out.println("请输入要修改的积分");
         float score = sc.nextFloat();
-
+        if (numericalUtils.isNegative(new BigDecimal(score),"积分")) {
+            return;
+        }
         System.out.println("请输入要修改的余额");
         double balance = sc.nextDouble();
+        if (numericalUtils.isNegative(new BigDecimal(balance),"余额")) {
+            return;
+        }
 
         m.setUsername(username);
         m.setPasswd(EncodingUtils.Encoding(passwd));
@@ -153,7 +163,10 @@ public class ShopMemberController {
         }
         System.out.println("请输入联系方式");
         String phoneNum = String.valueOf(sc.nextLong());
-
+        if (!phoneNum.matches("[0-9]{11}")){
+            System.out.println("请填入11位0-9的数字");
+            return;
+        }
         passwd = EncodingUtils.Encoding(passwd);
         ShopMember m = new ShopMember(username, passwd, phoneNum, new Timestamp(new Date().getTime()), null);
         int result = shopMemberService.addMember(m);

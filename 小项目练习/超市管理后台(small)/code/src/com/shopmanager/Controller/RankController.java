@@ -3,6 +3,7 @@ package com.shopmanager.Controller;
 import com.shopmanager.Service.Impl.RankServiceImpl;
 import com.shopmanager.Service.RankService;
 import com.shopmanager.bean.Rank;
+import com.shopmanager.common.GoodsNotFoundException;
 
 
 import java.util.List;
@@ -43,40 +44,54 @@ public class RankController {
     }
 
     private void countProductByType() {
-        List<Rank> productList=rankService.countProductByType();
-        if (productList==null){
-            System.out.println("出错啦！");
-            return;
+        try {
+            List<Rank> productList=rankService.countProductByType();
+            if (productList==null){
+                System.out.println("出错啦！");
+                return;
+            }
+            rankService.printProductMap(productList);
+        } catch (GoodsNotFoundException e) {
+            System.out.println(e.getMessage());
         }
-        printProductMap(productList);
     }
 
     private void countProductByMonth() {
         System.out.println("请输入月份");
         int month = sc.nextInt();
-        if (month<1&&month>12){
-            System.out.println("请输入数字1-12");
+        if (month<1 || month>12){
+            System.out.println("请输入数字【1-12】");
             return;
         }
         List<Rank> productList=rankService.countProductByMonth(month);
-        printProductMap(productList);
-    }
-
-
-    private void printProductMap(List<Rank> productList){
-        if (productList==null){
-            System.out.println("出错啦！");
-            return;
+        if (productList==null||productList.size()==0){
+            System.out.println("没有统计记录");
         }
-        for (int i = 0; i < productList.size(); i++) {
-            Rank rank = productList.get(i);
-            System.out.print((i+1)+":");
-            System.out.print(" 商品id="+ rank.getGname());
-            System.out.print("\t销售量="+ rank.getSales());
-            System.out.println();
 
+        try {
+            rankService.printProductMap(productList);
+        } catch (GoodsNotFoundException e) {
+            e.printStackTrace();
         }
     }
+
+
+//    private void printProductMap(List<Rank> productList){
+//
+//        if (productList==null){
+//            System.out.println("出错啦！");
+//            return;
+//        }
+//        for (int i = 0; i < productList.size(); i++) {
+//            Rank rank = productList.get(i);
+//
+//            System.out.print((i+1)+":");
+//            System.out.print(" 商品id="+ rank.getGname());
+//            System.out.print("\t销售量="+ rank.getSales());
+//            System.out.println();
+//
+//        }
+//    }
 
     private boolean returnMenu() {
         System.out.println("是否继续 y/n");

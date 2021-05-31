@@ -36,17 +36,24 @@ public class ShopManagerSystem {
             System.out.println("您输入的账号不存在！");
             return false;
         }
+        if (!Role.ADMIN.equalsIgnoreCase(userName) && !Role.CASHIER.equalsIgnoreCase(userName)){
+            System.out.println("您输入的账号不存在！");
+            return false;
+        }
+
         if (Role.CASHIER.equalsIgnoreCase(userName)){
             if (Role.CASHIER_PASSWD.equalsIgnoreCase(passwd)){
                 return true;
             }else{
                 System.out.println("您输入的密码不正确!");
+                return false;
             }
         }
         return false;
     }
 
     private boolean isAdmin(String userName, String passwd) {
+
         if (Role.ADMIN.equalsIgnoreCase(userName)&&passwd.length()!=0){
             if (passwd.equalsIgnoreCase(Role.ADMIN_PASSWD)){
                 return true;

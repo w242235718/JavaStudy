@@ -55,7 +55,7 @@ public class OrderPurchaseDaoImpl implements OrderPurchaseDao {
         String sql="SELECT gstore FROM `shopmanager`.t_goods WHERE gid=?";
         Integer store = DBUtils.executeQuery(Integer.class,sql,gid);
         if (store<ordernum){
-            throw new PurchaseException("库存不足");
+            throw new PurchaseException("商品编号【"+gid+"】库存不足");
         }
         sql="UPDATE `shopmanager`.t_goods SET gstore=gstore-?, updatetime=? WHERE gid=?";
         return DBUtils.execute(sql,ordernum,timestamp,gid);

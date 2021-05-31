@@ -3,6 +3,7 @@ package com.shopmanager.Controller;
 
 import com.shopmanager.Service.Impl.OrderQueryServiceImpl;
 import com.shopmanager.Service.OrderQueryService;
+import com.shopmanager.bean.Goods;
 import com.shopmanager.bean.Order;
 import com.shopmanager.bean.OrderInfo;
 
@@ -78,10 +79,20 @@ public class OrderQueryController {
 
         orders.stream().forEach((orderItem)->{
             List<OrderInfo> orderInfoList=orderQueryService.queryAllOrder(orderItem);
-            System.out.println(orderItem);
-                orderInfoList.forEach((item)->{
-                    System.out.println(item);
-                });
+            System.out.print("订单编号:"+orderItem.getOid());
+            System.out.print("\t用户id:"+orderItem.getUid());
+            System.out.print("\t\t订单总额:￥"+orderItem.getOrdertotal());
+            System.out.print("\t下单时间:"+orderItem.getPaytime());
+            System.out.print("\t付款方式:"+(orderItem.getPaymethod()==0?"现金":"会员卡支付"));
+            System.out.println();
+            orderInfoList.forEach((item)->{
+                Goods g=orderQueryService.queryGoods(item.getGid());
+                System.out.print("\t商品编号:"+g.getGid());
+                System.out.print("\t商品名称:"+g.getGname());
+                System.out.print("\t商品单价:￥"+g.getPrice());
+                System.out.print("\t\t购买数量:"+item.getOrdernum());
+                System.out.println();
+            });
         });
     }
 

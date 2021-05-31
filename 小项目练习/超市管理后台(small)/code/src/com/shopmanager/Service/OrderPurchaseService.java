@@ -1,6 +1,7 @@
 package com.shopmanager.Service;
 
 
+import com.shopmanager.bean.Goods;
 import com.shopmanager.bean.OrderInfo;
 import com.shopmanager.common.GoodsNotFoundException;
 
@@ -17,4 +18,6 @@ public interface OrderPurchaseService {
     Map<String, OrderInfo> editProductStoreInShoppingCart(Map<String, OrderInfo> shoppingCart, Scanner sc) throws GoodsNotFoundException;
 
     Map<String, OrderInfo> deleteProductInShoppringCart(Map<String, OrderInfo> shoppingCart, Scanner sc) throws GoodsNotFoundException;
+
+    Goods querySingleItem(OrderInfo item);
 }
